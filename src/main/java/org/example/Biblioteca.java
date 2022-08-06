@@ -18,7 +18,7 @@ public class Biblioteca {
         Canciones cancion3 = new Canciones("Las locuras mia","Silvestre",new Date(120,5,15),new Time(0,3,00),"Vallenato","XXX","Por Dios, que no quisiera sentir esta ilusión Tal vez podría cometer un grave error Porque tú eres prohibida para mí");
         Canciones cancion4 = new Canciones("El precio del error","Luis Alberto Posada",new Date(98,4,15),new Time(0,4,00),"Despecho","XXX","No lo puedo creer Que esto le esté pasando a usted Que después de tanto alarde Después de tantos desaires Seas tú la tenga que volver");
         Canciones cancion5 = new Canciones("las estrellas","Manuel medrano",new Date(116,6,22),new Time(0,4,00),"pop","XXX","Buscando en las estrellas encontré unos ojos tan brillantes como nada que conozcas más allá que el sol porque eres tan bella Más que el cielo y las estrellas tú eres lo que faltaba y siempre quise que estuviera");
-            ArrayList<Canciones> playList  = new ArrayList<>();
+        ArrayList<Canciones> playList  = new ArrayList<>();
 
 
         listaDeCanciones.add(cancion1);
@@ -55,15 +55,27 @@ public class Biblioteca {
                     System.out.println("INDIQUE LA CANTIDAD DE CANCIONES QUE  DESEAS AGREGAR A LA PLAYLIST");
                     numeroC = scanner.nextInt();
                     if (numeroC <= 5) {
+
                         for (int i = 1; i <= numeroC; i++) {
+
                             Canciones newSong = new Canciones();
                             addNewSong(newSong);
-                            playList.add(newSong);
+
+                            if (findSong(listaDeCanciones, newSong.getTitulo())) {
+                                playList.add(newSong);
                             }
-                          for (int i = 0; i < playList.size(); i++) {
-                        System.out.println("Canciones en la Playlist: " + playList.get(i).getTitulo());
+                            else {
+                                System.out.println("Canción no encontrada en la lista de canciones.");
+                            }
+
+                        }
+
+                        for (int i = 0; i < playList.size(); i++) {
+                            System.out.println("Canciones en la Playlist: " + playList.get(i).getTitulo());
+                        }
+
                     }
-                        }else{
+                    else {
                         System.out.println("HAS AGREGADO EL MAXIMO DE CANCIONES * 5 *");
                     }
 
@@ -108,29 +120,6 @@ public class Biblioteca {
         //Datos generales
         System.out.println("Ingrese el nombre de la canción: ");
         newSong.setTitulo(scanner.nextLine());
-       /* System.out.println("Ingrese el nombre del artista: ");
-        newSong.setIdentificador(scanner.nextLine());
-        System.out.println("Ingrese una descripción para la canción: ");
-        newSong.setDescripcion(scanner.nextLine());
-
-
-        //Toma de datos para la fecha.
-        System.out.println("Ingrese el día del lanzamiento de la canción (dd): ");
-        int dia = scanner.nextInt();
-        System.out.println("Ingrese el mes del lanzamiento de la canción (MM): ");
-        int mes = scanner.nextInt();
-        System.out.println("Ingrese el año del lanzamiento de la canción (yyyy): ");
-        int anio = scanner.nextInt();
-        newSong.setFecha(new Date(dia, mes, anio));
-
-        //Toma de datos para la duración.
-        System.out.println("Ingrese la cantidad de segundos que tiene la canción: (mm)");
-        int segundosTotal = scanner.nextInt();
-        int mins = segundosTotal / 60;
-        int segundos = segundosTotal % 60;
-        System.out.println(mins + ":" + segundos);
-        newSong.setDuracion(new Time(0, mins, segundos));*/
-
     }
 
     public static void genderFilter(ArrayList<Canciones> listOfSongs, String genre) {
@@ -152,4 +141,12 @@ public class Biblioteca {
         }
     }
 
+    public static boolean findSong(ArrayList<Canciones> listOfSongs, String searchSong) {
+        for (Canciones song: listOfSongs) {
+            if (song.getTitulo().toUpperCase().equals(searchSong.toUpperCase())) {
+                return true;
+            }
+        }
+        return false;
+    }
 }
