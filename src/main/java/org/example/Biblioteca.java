@@ -1,6 +1,7 @@
 package org.example;
 
 import java.sql.Time;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Scanner;
@@ -56,7 +57,9 @@ public class Biblioteca {
 
                     break;
                 case 2:
-                    System.out.println("GENERO DE LAS CANCIONES");
+                    System.out.println("Ingrese el genero para filtrar canciones");
+                    genderFilter(listaDeCanciones, scanner.next());
+                    /*System.out.println("GENERO DE LAS CANCIONES");
                     listaDeCanciones.add(cancion1);
                     listaDeCanciones.add(cancion2);
                     listaDeCanciones.add(cancion3);
@@ -64,14 +67,16 @@ public class Biblioteca {
                     listaDeCanciones.add(cancion5);
                     for (int i = 0; i <listaDeCanciones.size() ; i++) {
                         System.out.println("genero: "+ listaDeCanciones.get(i).getGenero());
-                    }
+                    }*/
 
                     break;
                 case 3:
+                    System.out.println("Ingrese el año para filtrar canciones! ");
+                    filterByYear(listaDeCanciones, scanner.nextInt());
                     break;
                 case 4:
                     for (int i = 0; i <listaDeCanciones.size() ; i++) {
-                        System.out.println("genero: "+ listaDeCanciones.get(i).getDuracion()+" ---"+.getFe);
+                        System.out.println("genero: "+ listaDeCanciones.get(i).getDuracion()+" ---" + listaDeCanciones.get(i).getFecha());
                     }
                     break;
                 case 5:
@@ -87,4 +92,25 @@ public class Biblioteca {
 
 
     }
+
+    public static void genderFilter(ArrayList<Canciones> listOfSongs, String genre) {
+        System.out.println("Lista de canciones del género " + genre);
+        for(Canciones song: listOfSongs) {
+            if (song.getGenero().toUpperCase().equals(genre.toUpperCase())) {
+                System.out.println(song.toString());
+            }
+        }
+    }
+
+    public static void filterByYear(ArrayList<Canciones> listOfSongs, int year) {
+        System.out.println("Lista de canciones del año " + year + "!");
+        for(Canciones song: listOfSongs) {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy"); //Para obtener solamente el año de la fecha del nodo actual
+            int songYear = Integer.parseInt(dateFormat.format(song.getFecha()));
+            if (songYear == year) {
+                System.out.println(song.toString());
+            }
+        }
+    }
+
 }
