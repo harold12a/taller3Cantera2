@@ -1,5 +1,7 @@
 package org.example;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -18,6 +20,11 @@ public class Biblioteca {
         Canciones cancion5 = new Canciones("las estrellas","Manuel medrano",new Date(116,6,22),new Time(0,4,00),"pop","XXX","Buscando en las estrellas encontré unos ojos tan brillantes como nada que conozcas más allá que el sol porque eres tan bella Más que el cielo y las estrellas tú eres lo que faltaba y siempre quise que estuviera");
 
 
+        listaDeCanciones.add(cancion1);
+        listaDeCanciones.add(cancion2);
+        listaDeCanciones.add(cancion3);
+        listaDeCanciones.add(cancion4);
+        listaDeCanciones.add(cancion5);
         int opcion = 0;
         int numeroC;
         String cancion;
@@ -35,40 +42,25 @@ public class Biblioteca {
             switch (opcion){
                 case 1:
                     System.out.println("TENEMOS LAS DIGIENTES CANCIONES DISPONIBLES");
-                    listaDeCanciones.add(cancion1);
-                    listaDeCanciones.add(cancion2);
-                    listaDeCanciones.add(cancion3);
-                    listaDeCanciones.add(cancion4);
-                    listaDeCanciones.add(cancion5);
+
                     for (int i = 0; i <listaDeCanciones.size() ; i++) {
                         System.out.println("Cancion: " +listaDeCanciones.get(i).getTitulo());
                     }
+
                     System.out.println("INDIQUE LA CANTIDAD DE CANCIONES QUE  DESEAS AGREGAR A LA PLAYLIST");
                     numeroC = scanner.nextInt();
-                    if (numeroC <=5 ){
-                        for (int i = 0; i <=numeroC ; i++) {
-                            System.out.println("INGRESE NOMBRE DE LA CANCION: ");
-                            cancion = scanner.nextLine();
+                    if (numeroC <= 5 ){
+                        for (int i = 0; i <= numeroC ; i++) {
+                            Canciones newSong = new Canciones();
+                            addNewSong(newSong);
+                            listaDeCanciones.add(newSong);
                         }
-
-
                     }
-
 
                     break;
                 case 2:
                     System.out.println("Ingrese el genero para filtrar canciones");
                     genderFilter(listaDeCanciones, scanner.next());
-                    /*System.out.println("GENERO DE LAS CANCIONES");
-                    listaDeCanciones.add(cancion1);
-                    listaDeCanciones.add(cancion2);
-                    listaDeCanciones.add(cancion3);
-                    listaDeCanciones.add(cancion4);
-                    listaDeCanciones.add(cancion5);
-                    for (int i = 0; i <listaDeCanciones.size() ; i++) {
-                        System.out.println("genero: "+ listaDeCanciones.get(i).getGenero());
-                    }*/
-
                     break;
                 case 3:
                     System.out.println("Ingrese el año para filtrar canciones! ");
@@ -93,7 +85,41 @@ public class Biblioteca {
 
     }
 
-    public static void genderFilter(ArrayList<Canciones> listOfSongs, String genre) {
+    public static void addNewSong(Canciones newSong) {
+        Scanner scanner = new Scanner(System.in);
+        //Datos generales
+        System.out.println("Ingrese el nombre de la canción: ");
+        newSong.setTitulo(scanner.next());
+        System.out.println("Ingrese el nombre del artista: ");
+        newSong.setIdentificador(scanner.next());
+        System.out.println("Ingrese una descripción para la canción: ");
+        newSong.setDescripcion(scanner.next());
+
+
+        //Toma de datos para la fecha.
+        System.out.println("Ingrese el día del lanzamiento de la canción (dd): ");
+        int dia = scanner.nextInt();
+        System.out.println("Ingrese el mes del lanzamiento de la canción (MM): ");
+        int mes = scanner.nextInt();
+        System.out.println("Ingrese el año del lanzamiento de la canción (yyyy): ");
+        int anio = scanner.nextInt();
+        newSong.setFecha(new Date(dia, mes, anio));
+
+        //Toma de datos para la duración.
+        System.out.println("Ingrese la cantidad de segundos que tiene la canción: (mm)");
+        int segundosTotal = scanner.nextInt();
+        int mins = segundosTotal / 60;
+        int segundos = segundosTotal % 60;
+        System.out.println(mins + ":" + segundos);
+        newSong.setDuracion(new Time(0, mins, segundos));
+
+
+    }
+
+
+
+
+    public static void genderFilter(@NotNull ArrayList<Canciones> listOfSongs, String genre) {
         System.out.println("Lista de canciones del género " + genre);
         for(Canciones song: listOfSongs) {
             if (song.getGenero().toUpperCase().equals(genre.toUpperCase())) {
@@ -102,7 +128,7 @@ public class Biblioteca {
         }
     }
 
-    public static void filterByYear(ArrayList<Canciones> listOfSongs, int year) {
+    public static void filterByYear(@NotNull ArrayList<Canciones> listOfSongs, int year) {
         System.out.println("Lista de canciones del año " + year + "!");
         for(Canciones song: listOfSongs) {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy"); //Para obtener solamente el año de la fecha del nodo actual
