@@ -13,6 +13,16 @@ public class Canciones {
     public String caratula;
     public String descripcion;
 
+    public Canciones() {
+        titulo = "";
+        identificador = "";
+        fecha = new Date();
+        duracion = new Time(0,0,0);
+        genero = "";
+        caratula = "";
+        descripcion = "";
+    }
+
     public Canciones(String titulo, String identificador, Date fecha, Time duracion, String genero, String caratula, String descripcion) {
         this.titulo = titulo;
         this.identificador = identificador;
