@@ -83,20 +83,10 @@ public class Biblioteca {
 
                     break;
                 case 2:
-                    System.out.println("GENERO DE LAS CANCIONES DISPONIBLES");
-
-                    for (int i = 0; i <listaDeCanciones.size() ; i++) {
-                        System.out.println("Cancion: " +listaDeCanciones.get(i).getGenero());
-                    }
                     System.out.println("Ingrese el genero para filtrar canciones");
                     genderFilter(listaDeCanciones, scanner.next());
                     break;
                 case 3:
-                    System.out.println("FECHA DE LAS CANCIONES ");
-
-                    for (int i = 0; i <listaDeCanciones.size() ; i++) {
-                        System.out.println("Cancion: " +listaDeCanciones.get(i).getFecha());
-                    }
                     System.out.println("Ingrese el año para filtrar canciones! ");
                     filterByYear(listaDeCanciones, scanner.nextInt());
                     break;
@@ -126,7 +116,7 @@ public class Biblioteca {
         System.out.println("Lista de canciones del género " + genre);
         for(Canciones song: listOfSongs) {
             if (song.getGenero().toUpperCase().equals(genre.toUpperCase())) {
-                System.out.println(song.toString());
+                System.out.println(song.toString() + "\n");
             }
         }
     }
@@ -136,7 +126,7 @@ public class Biblioteca {
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy"); //Para obtener solamente el año de la fecha del nodo actual
             int songYear = Integer.parseInt(dateFormat.format(song.getFecha()));
             if (songYear == year) {
-                System.out.println(song.toString());
+                System.out.println(song.toString() + "\n");
             }
         }
     }
